@@ -25,6 +25,7 @@ func TestAlertEndpoints(t *testing.T) {
 		{"too large", http.MethodPost, "/alerts/plug", strings.Repeat("x", maxBodyBytes+1), http.StatusRequestEntityTooLarge, ""},
 		{"wrong method", http.MethodGet, "/alerts/plug", ``, http.StatusMethodNotAllowed, ""},
 		{"unknown", http.MethodPost, "/alerts/other", `{}`, http.StatusNotFound, ""},
+		{"root", http.MethodGet, "/", ``, http.StatusOK, "Hello, World!"},
 		{"health", http.MethodGet, "/healthz", ``, http.StatusOK, "."},
 	}
 	for _, tc := range tests {

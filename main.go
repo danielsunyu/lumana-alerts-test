@@ -14,9 +14,14 @@ import (
 func main() {
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
 
+	// Render (and most PaaS) inject PORT; ADDR overrides for local use.
 	addr := os.Getenv("ADDR")
 	if addr == "" {
-		addr = ":8080"
+		port := os.Getenv("PORT")
+		if port == "" {
+			port = "8080"
+		}
+		addr = ":" + port
 	}
 
 	srv := &http.Server{

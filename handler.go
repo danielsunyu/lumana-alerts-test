@@ -35,6 +35,10 @@ func NewRouter(log *slog.Logger) http.Handler {
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.Heartbeat("/healthz"))
 
+	r.Get("/", func(w http.ResponseWriter, _ *http.Request) {
+		_, _ = w.Write([]byte("Hello, World!"))
+	})
+
 	r.Route("/alerts", func(r chi.Router) {
 		r.Post("/plug", h.handlePlug)
 		r.Post("/unplug", h.handleUnplug)
